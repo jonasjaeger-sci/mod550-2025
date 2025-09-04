@@ -43,7 +43,7 @@ class DataGenerator:
 
 
 
-
+"""
 te = DataGenerator()
 #te.uniform_dist()
 #te.gaussian_dist()
@@ -58,6 +58,6 @@ te.exponential(k = -1)
 plt.scatter(*te.data.T)
 
 plt.show()
-
+"""
 
 
