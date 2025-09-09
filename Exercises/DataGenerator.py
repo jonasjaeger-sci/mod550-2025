@@ -3,7 +3,15 @@ import random
 import matplotlib.pyplot as plt
 
 class DataGenerator:
+    """
+    initialize class DataGenerator to construct various datasets
+    """
     def __init__(self, nRows=1000, nCols=2):
+        """
+        Initialization function that describes the size of the dataset
+        :param nRows:
+        :param nCols:
+        """
         self.nRows = nRows
         self.nCols = nCols
         self.data = []
