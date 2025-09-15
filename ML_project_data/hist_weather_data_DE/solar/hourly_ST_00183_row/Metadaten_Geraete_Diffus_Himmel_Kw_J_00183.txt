@@ -1,0 +1,18 @@
+Stations_ID;Stationsname;Geo. Laenge [Grad];Geo. Breite [Grad];Stationshoehe [m];Geberhoehe ueber Grund [m];Von_Datum;Bis_Datum;Geraetetyp Name;Messverfahren;eor;
+183;Arkona;13.43;54.68;42;1.5;19810101;19820117;Pyranometer CM5;Strahlungsmessung, elektr.;eor;
+183;Arkona;13.43;54.68;42;1.5;19820303;19840516;Pyranometer CM5;Strahlungsmessung, elektr.;eor;
+183;Arkona;13.43;54.68;42;8.9;19840514;19870120;Pyranometer CM5;Strahlungsmessung, elektr.;eor;
+183;Arkona;13.43;54.68;42;8.9;19870218;19871029;Pyranometer CM5;Strahlungsmessung, elektr.;eor;
+183;Arkona;13.43;54.68;42;8.9;19871101;19900226;Pyranometer CM5;Strahlungsmessung, elektr.;eor;
+183;Arkona;13.43;54.68;42;8.9;19900228;19930705;Pyranometer CM5;Strahlungsmessung, elektr.;eor;
+183;Arkona;13.43;54.68;42;8.9;19930707;19950123;Pyranometer CM5;Strahlungsmessung, elektr.;eor;
+183;Arkona;13.43;54.68;42;8.9;19950125;19970128;Pyranometer CM5;Strahlungsmessung, elektr.;eor;
+183;Arkona;13.43;54.68;42;8.9;19970131;19971002;Pyranometer CM5;Strahlungsmessung, elektr.;eor;
+183;Arkona;13.43;54.68;42;8.9;19971008;20000826;Pyranometer CM5;Strahlungsmessung, elektr.;eor;
+183;Arkona;13.43;54.68;42;8.9;20000829;20030726;Pyranometer CM5;Strahlungsmessung, elektr.;eor;
+183;Arkona;13.43;54.68;42;8.9;20030624;20060810;Pyranometer CM21;Strahlungsmessung, elektr.;eor;
+183;Arkona;13.43;54.68;42;8.9;20060811;20060819;Pyranometer CM21;Strahlungsmessung, elektr.;eor;
+183;Arkona;13.43;54.68;42;8.9;20060824;20210208;Pyranometer CM21;Strahlungsmessung, elektr.;eor;
+183;Arkona;13.43;54.68;42;8.9;20210212;20211103;Pyranometer CM21;Strahlungsmessung, elektr.;eor;
+183;Arkona;13.43;54.68;42;8.9;20230816;20250901;Pyranometer CM21;Strahlungsmessung, elektr.;eor;
+generiert: 02.09.2025 --  Deutscher Wetterdienst  --
