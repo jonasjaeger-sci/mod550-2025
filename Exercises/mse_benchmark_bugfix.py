@@ -29,7 +29,7 @@ index = functions.items()
 for method_name,method in functions.items():
     #print(method_name)
     #print(method)
-    mse = method(*kwarg.values())
+    mse = round(method(*kwarg.values()),4)
     #print(mse)
     t_exec = it.timeit('{method(*kwarg.values())}', globals=globals(), number=calcs)
 
