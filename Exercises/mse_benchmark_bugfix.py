@@ -16,7 +16,7 @@ functions= {'mse_vanilla': vanilla_mse,
             'mse_numpy': numpy_mse,
             'mse_sk': sk_mse}
 
-#calcuate MSE1
+#calcuate MSE
 calcs = 1000
 
 index = functions.items()
