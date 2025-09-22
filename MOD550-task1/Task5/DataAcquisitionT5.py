@@ -1,9 +1,8 @@
-import numpy as np
 import pandas as pd
 
-class DataAkquisition:
+class DataAcquisition:
     """
-    initialize data akquisition for Task3: make a histogram for the source data you selected
+    initialize data acquisition for Task5
     """
     def __init__(self):
         pass
