@@ -1,9 +1,8 @@
 import numpy as np
-import  random
 
-class DataAkquisition:
+class DataAcquisition:
     """
-    initialize data akquisition for Task1: make a histogram from a 2d random distribution
+    initialize data acquisition for Task1: make a histogram from a 2d random distribution
     """
 
     def __init__(self, nRows=1000, nCols=2):
@@ -35,7 +34,8 @@ class DataAkquisition:
 
     def gaussian_dist(self, mean=0, std=1):
         """
-        function to construct a dataset with gaussian/normal distribution with asigned mean and standard deviation
+        function to construct a dataset with gaussian/normal distribution with
+        assigned mean and standard deviation
 
         parameter
         ----------

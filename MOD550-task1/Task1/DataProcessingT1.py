@@ -1,8 +1,13 @@
-from DataAkquisitionT1 import DataAkquisition
+"""
+This program provides code that utilizes a data acquistion class
+in order to make a histogram from a 2D-distribution
+"""
+
+from DataAcquisitionT1 import DataAcquisition
 import matplotlib.pyplot as plt
 
 # generate data instance
-rnd_data = DataAkquisition()
+rnd_data = DataAcquisition()
 #rnd_data.uniform_dist(lb=0 , ub=10)
 rnd_data.gaussian_dist()
 
