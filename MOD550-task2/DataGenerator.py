@@ -23,7 +23,7 @@ class DataGenerator:
         self.data = np.random.normal(mean,std,(self.nRows,self.nCols))
 
     def linear(self, m=1, b=0):
-        x = np.arange(0,self.nRows,1)
+        x = np.arange(0,self.nRows,1.0)
         y = m*x + b
         self.data = np.column_stack((x,y))
 
