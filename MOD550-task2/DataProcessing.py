@@ -18,7 +18,7 @@ dataset.add_gaussian_noise(std = 25)
 #"""
 datamodel = DataModel(dataset.data)
 datamodel.linear_regression()
-plt.scatter(datamodel.x,datamodel.y)
+plt.scatter(datamodel.x,datamodel.y, label="")
 plt.plot(datamodel.x,datamodel.lin_reg_y_predict,color="red", linewidth=3)
 plt.show()
 #"""
