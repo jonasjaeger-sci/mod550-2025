@@ -7,15 +7,15 @@ import matplotlib.pyplot as plt
 import scipy.stats
 
 # generate linear data
-dataset = DataGenerator(nRows=1000)
+dataset = DataGenerator(n_rows=1000)
 dataset.linear(m=1 , b=60)
 dataset.add_gaussian_noise(std = 25)
 x = dataset.data[:,0].reshape(-1,1)
-#print(x)
+print(x.shape)
 y = dataset.data[:,1].reshape(-1,1)
-#print(y)
+print(y.shape)
 
-# define the neural network model for linesr regression
+# define the neural network model for linear regression
 model = Sequential([
     Dense(16,input_dim=1, activation='relu', kernel_regularizer=l2(0.01)),
     Dense(16,input_dim=1, activation='relu', kernel_regularizer=l2(0.01)),
