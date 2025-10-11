@@ -2,15 +2,12 @@
 This code is used to utilize the predefined classes DataGenerator and DataModel to perform the tasks
 """
 
-import numpy as np
-import pandas as pd
-import matplotlib.pyplot as plt
-from scipy.cluster.vq import kmeans
 
+import matplotlib.pyplot as plt
 from DataGenerator import DataGenerator
 from DataModel import DataModel
 
-# Task 1: test data acquisitionin model
+# Task 1: test data acquisition model
 dataset = DataGenerator(n_rows=1001)
 dataset.linear(x_0=-200, x_end=dataset.n_rows, m=1 , b=60)
 dataset.add_gaussian_noise(std = 25)
@@ -45,5 +42,8 @@ datamodel.mean_square_error(observation=datamodel.y, prediction=datamodel.lin_re
 #"""
 
 # Task 6: test kmeans and gaussian mixture model (gmm)
-datamodel.k_means(max_n_clusters=11)
+#datamodel.k_means(max_n_clusters=11)
+#plt.show()
+
+datamodel.gmm(max_n_clusters=11)
 plt.show()

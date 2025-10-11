@@ -207,7 +207,7 @@ class DataModel:
 
     def k_means(self, max_n_clusters=5):
         """
-        function to calculate
+        function to train a k-means model and divide the unlabeled data into clusters
         Parameters
         ----------
         max_n_clusters: int
@@ -220,7 +220,7 @@ class DataModel:
 
         # run multiple clusters to see which one is efficient enough
         sum_squared_dist = []
-        for i in range(1,max_n_clusters):
+        for i in range(1,max_n_clusters+1):
            km = KMeans(n_clusters=i)
            km.fit(self.data[:,-1].reshape(-1,1))
            sum_squared_dist.append(km.inertia_)
@@ -231,15 +231,15 @@ class DataModel:
                      f"for different clusters")
         ax.set_xlabel("# of clusters", fontsize=15, fontweight="bold")
         ax.set_ylabel("# sum of squared distances", fontsize=15, fontweight="bold")
-        ax.plot(range(1, max_n_clusters), sum_squared_dist, color="black",
+        ax.plot(range(1, max_n_clusters+1), sum_squared_dist, color="black",
                 linewidth=3, marker="x")
         ax.grid(True)
         plt.show()
 
-        # look at the plot and decide how many clusters are sufficient
+        # evaluate the plot and decide how many clusters are sufficient
         n_cluster = int(input("Evaluate plot and insert number of clusters to fit the model: "))
 
-        # train model and display the clsuters
+        # train model and display the clusters
         self.km_model = KMeans(n_clusters=n_cluster)
         self.km_model.fit(self.data[:,-1].reshape(-1,1))
         cluster_labels = self.km_model.labels_
@@ -252,4 +252,53 @@ class DataModel:
         ax.scatter(self.data[:,0],self.data[:,1], c=cluster_labels, s=50)
         ax.grid(True)
 
+    def gmm(self, max_n_clusters=5):
+        """
+        function to define a gaussian mixture model (gmm) and divide
+        the unlabeled data into clusters which each represent a gaussian distribution
+        Parameters
+        ----------
+        max_n_clusters: int
+            maximum number of clusters to test
+
+        Returns
+        -------
+
+        """
+
+        # run multiple clusters to see which one is efficient enough
+        bic = [] # bayesian information criterion, comparable to inertia from kmeans
+        for i in range(1,max_n_clusters+1):
+            gmm = GaussianMixture(n_components=i)
+            gmm.fit(self.data[:,-1].reshape(-1,1))
+            bic.append(gmm.bic(self.data[:,-1].reshape(-1,1)))
+
+        fig_gmm1 = plt.figure()
+        ax = fig_gmm1.add_subplot(1,1,1)
+        ax.set_title(f"Evaluation of bayesian information criterion \n"
+                     f"for different clusters")
+        ax.set_xlabel("# of clusters", fontsize=15, fontweight="bold")
+        ax.set_ylabel("# Bayesian information criterion", fontsize=15, fontweight="bold")
+        ax.plot(range(1, max_n_clusters+1), bic, color="black",
+                linewidth=3, marker="x")
+        ax.grid(True)
+        plt.show()
+
+        # evaluate the plot and decide how many clusters are sufficient
+        n_cluster = int(input("Evaluate plot and insert number of clusters to fit the model: "))
+
+        # train model and display the clusters
+        self.gmm_model = GaussianMixture(n_components=n_cluster)
+        self.gmm_model.fit(self.data[:, -1].reshape(-1, 1))
+        cluster_labels = self.gmm_model.predict(self.data[:, -1].reshape(-1, 1))
+
+        print(f"cluster labels:{cluster_labels}")
+
+        fig_gmm2 = plt.figure()
+        ax = fig_gmm2.add_subplot(1, 1, 1)
+        ax.set_title(f"gaussian mixture model clustering with {n_cluster} clusters")
+        ax.set_xlabel("x", fontsize=15, fontweight="bold")
+        ax.set_ylabel("y", fontsize=15, fontweight="bold")
+        ax.scatter(self.data[:, 0], self.data[:, 1], c=cluster_labels, s=50)
+        ax.grid(True)
 
