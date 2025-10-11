@@ -45,5 +45,7 @@ datamodel.mean_square_error(observation=datamodel.y, prediction=datamodel.lin_re
 #datamodel.k_means(max_n_clusters=11)
 #plt.show()
 
-datamodel.gmm(max_n_clusters=11)
+#datamodel.gmm(max_n_clusters=11)
+#plt.show()
+datamodel.linear_regression_vanilla()
 plt.show()
