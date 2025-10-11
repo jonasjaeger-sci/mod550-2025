@@ -42,13 +42,13 @@ class DataModel:
         # calculate slope m and y-intercept b
         n = sum((self.x - self.x_mean) * (self.y - self.y_mean))
         d = sum((self.x - self.x_mean)**2)
-        m = round(n/d,3)
-        b = round(self.y_mean - m * self.x_mean,3)
-        self.lin_reg_y_predict = m * self.x + b
+        self.m = round(n/d,3)
+        self.b = round(self.y_mean - self.m * self.x_mean,3)
+        self.lin_reg_y_predict = self.m * self.x + self.b
 
         fig_linregvan = plt.figure()
         ax = fig_linregvan.add_subplot(1,1,1)
-        ax.set_title(f"linear regression: y = {m}x + {b}")
+        ax.set_title(f"vanilla linear regression: y = {self.m}x + {self.b}")
         ax.set_xlabel("x", fontsize=14, fontweight="bold")
         ax.set_ylabel("y", fontsize=14, fontweight="bold")
         ax.scatter(self.x, self.y, color="black", s= 50, label="data points")
@@ -56,8 +56,6 @@ class DataModel:
                 color="red", label="linear regression")
         ax.legend()
         ax.grid(True)
-
-
 
     def linear_regression(self):
         """
@@ -74,6 +72,18 @@ class DataModel:
         self.lin_reg_model = LinearRegression()
         self.lin_reg_model.fit(self.X,self.y)
         self.lin_reg_y_predict = self.lin_reg_model.predict(self.X)
+
+        fig_linreg = plt.figure()
+        ax = fig_linreg.add_subplot(1, 1, 1)
+        ax.set_title(f"sklearn linear regression: y = {round(float(self.lin_reg_model.coef_),3)}x +"
+                     f" {round(self.lin_reg_model.intercept_,3)}")
+        ax.set_xlabel("x", fontsize=14, fontweight="bold")
+        ax.set_ylabel("y", fontsize=14, fontweight="bold")
+        ax.scatter(self.x, self.y, color="black", s=50, label="data points")
+        ax.plot(self.x, self.lin_reg_y_predict, linewidth=2.5,
+                color="red", label="linear regression")
+        ax.legend()
+        ax.grid(True)
 
     def data_split(self,r_train=0.6, r_validation=0.2):
         """
