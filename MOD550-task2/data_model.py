@@ -151,7 +151,8 @@ class DataModel:
 
         if len(observation) != len(prediction):
             raise ValueError(f"Unequal number of elements:\n Observation:"
-                             f" {len(observation)} \n {len(prediction)}.")
+                             f" {len(observation)} \n "
+                             f"Prediction: {len(prediction)}.")
 
         # make sure arrays have same shape:
         observation = observation.reshape(-1,1)
