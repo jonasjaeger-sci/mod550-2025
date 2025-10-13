@@ -63,11 +63,11 @@ the nodes themselves process the input and impact the output.
 
 # b) Discuss how you can use the validation data for the different cases
 """
-As a subset of the real dataset is used as a first indicator of how well the model performs after 
-training i.e. coefficient determination. Calculating the loss from the validation predictions 
-can be used to further optimize some of the model parameters. It should be noted, that for 
-unbalanced datasets a special emphasis should be placed on assuring that ever subset 
-contains datapoints with the same ratio
+The validation data as a subset of the real dataset is used as a first indicator of how well 
+the model performs after training i.e. coefficient determination. Calculating the loss from 
+the validation predictions can be used to further optimize some of the model parameters. It 
+should be noted, that for unbalanced datasets a special emphasis should be placed on assuring 
+that ever subset contains datapoints with the same ratio
 """
 
 # c)Discuss the different outcome from the different models when using the full dataset to train
