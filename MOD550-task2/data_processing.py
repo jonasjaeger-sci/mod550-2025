@@ -70,7 +70,7 @@ should be noted, that for unbalanced datasets a special emphasis should be place
 that ever subset contains datapoints with the same ratio
 """
 
-# c)Discuss the different outcome from the different models when using the full dataset to train
+# c) Discuss the different outcome from the different models when using the full dataset to train
 # and when you use a different ML approach.
 """
 Using all datapoints to train the ML model can prove problematic since it is not possible
