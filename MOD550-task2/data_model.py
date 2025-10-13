@@ -13,6 +13,9 @@ from tensorflow.keras.layers import Dense
 from tensorflow.keras.regularizers import l2
 
 class DataModel:
+    """
+    data model class to analyse a given dataset with machine learning methods
+    """
 
     def __init__(self,data):
         """
@@ -26,11 +29,13 @@ class DataModel:
         self.data = data
         self.split_bit = 0
 
-    def linear_regression_vanilla(self, train=False):
+    def linear_regression_vanilla(self, col=0, train=False):
         """
         function to perform linear regression with vanilla python
         Parameters
         ----------
+        col: int
+            column data where the linear regression shall be performed
         train: str
             string indicating if linear regression should be performed on
             all data or just the training data
@@ -38,16 +43,21 @@ class DataModel:
         """
 
         if train == False:
-            self.x = self.data[:, 0]
-            self.y = self.data[:, 1]
+            self.x = self.data[:, col]
+            self.y = self.data[:, -1]
+            title = "LR all data"
         else:
             if self.split_bit == 0:
-                raise ValueError(f"Error: data split has not yet been performed")
-            self.x = self.x_train
+                raise ValueError("Error: data split has not yet been performed")
+            self.x = self.x_train[:, col]
             self.y = self.y_train
+            title = "LR train data"
 
         self.x_mean = np.mean(self.x)
         self.y_mean = np.mean(self.y)
+
+        # calculate r-value of the data
+        self.LR_Rvalue = np.corrcoef(np.transpose(self.x), np.transpose(self.y))
 
         # calculate slope m and y-intercept b
         n = sum((self.x - self.x_mean) * (self.y - self.y_mean))
@@ -56,13 +66,9 @@ class DataModel:
         self.b = round(self.y_mean - self.m * self.x_mean,3)
         self.lin_reg_y_predict = self.m * self.x + self.b
 
-        # calculate r-value of the regression
-        self.LR_Rvalue = np.corrcoef(np.transpose(self.x), np.transpose(self.lin_reg_y_predict))
-
-
         fig_linregvan = plt.figure()
         ax = fig_linregvan.add_subplot(1,1,1)
-        ax.set_title(f"vanilla linear regression: y = {self.m}x + {self.b} \n"
+        ax.set_title(f"{title}: y = {self.m}x + {self.b} \n"
                      f"R = {round(self.LR_Rvalue[0,1],2)}")
         ax.set_xlabel("x", fontsize=14, fontweight="bold")
         ax.set_ylabel("y", fontsize=14, fontweight="bold")
@@ -144,12 +150,19 @@ class DataModel:
         """
 
         if len(observation) != len(prediction):
-            raise ValueError(f"Unequal number of elements:\n Observation: {len(observation)} \n {len(prediction)}.")
+            raise ValueError(f"Unequal number of elements:\n Observation:"
+                             f" {len(observation)} \n {len(prediction)}.")
+
+        # make sure arrays have same shape:
+        observation = observation.reshape(-1,1)
+        prediction = prediction.reshape(-1,1)
+
+        # calculate and print mse
         self.mse = sum((observation - prediction)**2) / len(observation)
         print(f"mean-square-error: {self.mse}")
 
     def neural_network(self,n_neurons=16, n_layers=5, act_fun="relu", l2_val=0.01,
-                       opt="adam", loss_fun="mse", n_epochs=30, plot_check="no" ):
+                       opt="adam", loss_fun="mse", n_epochs=30, plot_check=False ):
         """
         function to train a neural network that allows variable number of layers and
         choice of activation function
@@ -188,30 +201,32 @@ class DataModel:
         # fit the model
         if self.split_bit == 0:
             raise ValueError("Data split has not been performed yet!")
-        else:
-            self.NN_model.fit(self.x_train, self.y_train,
-                      epochs=n_epochs, verbose=1)
+
+        self.NN_model.fit(self.x_train, self.y_train,
+                          epochs=n_epochs, verbose=1)
 
         # predict validation and test data
         self.NN_y_train_predict = self.NN_model.predict(self.x_train)
         self.NN_y_val_predict   = self.NN_model.predict(self.x_validation)
         self.NN_y_test_predict  = self.NN_model.predict(self.x_test)
 
-        self.NN_Rvalue_train = np.corrcoef(np.transpose(self.x_train), np.transpose(self.NN_y_train_predict))
+        self.NN_Rvalue_train = np.corrcoef(np.transpose(self.x_train),
+                                           np.transpose(self.NN_y_train_predict))
         self.NN_Rvalue_train = np.round(self.NN_Rvalue_train,3)
-        self.NN_Rvalue_val   = np.corrcoef(np.transpose(self.x_validation), np.transpose(self.NN_y_val_predict))
+        self.NN_Rvalue_val   = np.corrcoef(np.transpose(self.x_validation),
+                                           np.transpose(self.NN_y_val_predict))
         self.NN_Rvalue_val = np.round(self.NN_Rvalue_val, 3)
-        #if self.NN_Rvalue_val[0, 1] < 0.7:
-        #    raise ValueError(f"Insufficient model performance. R-Value < 0.7 - please adapt model parameters")
-        self.NN_Rvalue_test  = np.corrcoef(np.transpose(self.x_test), np.transpose(self.NN_y_test_predict))
+        self.NN_Rvalue_test  = np.corrcoef(np.transpose(self.x_test),
+                                           np.transpose(self.NN_y_test_predict))
         self.NN_Rvalue_test = np.round(self.NN_Rvalue_test, 3)
 
-        if plot_check == "yes":
+        if plot_check == True:
             NN_fig = plt.figure()
 
             # training
             ax1 = NN_fig.add_subplot(1,3,1)
-            ax1.set_title(f"Neural Network performance on training data: R={self.NN_Rvalue_train[0,1]}")
+            ax1.set_title(f"Neural Network performance on training data:"
+                          f" R={self.NN_Rvalue_train[0,1]}")
             ax1.set_xlabel("x", fontsize=14, fontweight="bold")
             ax1.set_ylabel("y", fontsize=14, fontweight="bold")
             ax1.scatter(self.x_train, self.y_train, s=50,
@@ -223,7 +238,8 @@ class DataModel:
 
             # validation
             ax1 = NN_fig.add_subplot(1, 3, 2)
-            ax1.set_title(f"Neural Network performance on validation data: R={self.NN_Rvalue_val[0, 1]}")
+            ax1.set_title(f"Neural Network performance on validation data:"
+                          f" R={self.NN_Rvalue_val[0, 1]}")
             ax1.set_xlabel("x", fontsize=14, fontweight="bold")
             ax1.set_ylabel("y", fontsize=14, fontweight="bold")
             ax1.scatter(self.x_validation, self.y_validation, s=50,
@@ -258,14 +274,14 @@ class DataModel:
         # run multiple clusters to see which one is efficient enough
         sum_squared_dist = []
         for i in range(1,max_n_clusters+1):
-           km = KMeans(n_clusters=i)
-           km.fit(self.data[:,-1].reshape(-1,1))
-           sum_squared_dist.append(km.inertia_)
+            km = KMeans(n_clusters=i)
+            km.fit(self.data[:,-1].reshape(-1,1))
+            sum_squared_dist.append(km.inertia_)
 
         fig_km1 = plt.figure()
         ax = fig_km1.add_subplot(1,1,1)
-        ax.set_title(f"Evaluation of sum of squared distances \n"
-                     f"for different clusters")
+        ax.set_title("Evaluation of sum of squared distances \n"
+                     "for different clusters")
         ax.set_xlabel("# of clusters", fontsize=15, fontweight="bold")
         ax.set_ylabel("# sum of squared distances", fontsize=15, fontweight="bold")
         ax.plot(range(1, max_n_clusters+1), sum_squared_dist, color="black",
@@ -309,8 +325,8 @@ class DataModel:
 
         fig_gmm1 = plt.figure()
         ax = fig_gmm1.add_subplot(1,1,1)
-        ax.set_title(f"Evaluation of bayesian information criterion \n"
-                     f"for different clusters")
+        ax.set_title("Evaluation of bayesian information criterion \n"
+                     "for different clusters")
         ax.set_xlabel("# of clusters", fontsize=15, fontweight="bold")
         ax.set_ylabel("# Bayesian information criterion", fontsize=15, fontweight="bold")
         ax.plot(range(1, max_n_clusters+1), bic, color="black",
@@ -326,8 +342,6 @@ class DataModel:
         self.gmm_model.fit(self.data[:, -1].reshape(-1, 1))
         cluster_labels = self.gmm_model.predict(self.data[:, -1].reshape(-1, 1))
 
-        print(f"cluster labels:{cluster_labels}")
-
         fig_gmm2 = plt.figure()
         ax = fig_gmm2.add_subplot(1, 1, 1)
         ax.set_title(f"gaussian mixture model clustering with {n_cluster} clusters")
@@ -335,4 +349,3 @@ class DataModel:
         ax.set_ylabel("y", fontsize=15, fontweight="bold")
         ax.scatter(self.data[:, 0], self.data[:, 1], c=cluster_labels, s=50)
         ax.grid(True)
-

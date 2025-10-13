@@ -2,12 +2,12 @@ import numpy as np
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Dropout
 from tensorflow.keras.regularizers import l1, l2
-from DataGenerator import DataGenerator
+from data_generator import DataGenerator
 import matplotlib.pyplot as plt
 import scipy.stats
 
 # generate linear data
-dataset = DataGenerator(n_rows=1000)
+dataset = DataGenerator()
 dataset.linear(m=1 , b=60)
 dataset.add_gaussian_noise(std = 25)
 x = dataset.data[:,0].reshape(-1,1)

@@ -13,7 +13,7 @@ from DataGenerator import DataGenerator
 n_datapoints = 1000
 mean = 175 # average size
 std = 15
-sampler = DataGenerator(nRows=n_datapoints)
+sampler = DataGenerator(n_rows=n_datapoints)
 sampler.gaussian_dist(mean=mean, std=std)
 s1_gaussian = np.round(sampler.data[:,0],1)
 
