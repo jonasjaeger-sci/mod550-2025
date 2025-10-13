@@ -169,12 +169,22 @@ class DataModel:
         choice of activation function
         Parameters
         ----------
+        n_neurons: int
+            number of neurons per layer
         n_layers: int
             number of layers
         act_fun: str
             name of activation function for the hidden layer
         l2_val: float
             value for l2-regularization parameter to mitigate overfitting
+        opt: str
+            name of optimization protocol
+        loss_fun: str
+            name of loss function
+        n_epochs: int
+            number of training iterations
+        plot_check: boolean
+            boolean to indicate if plot is desired
 
         """
 
