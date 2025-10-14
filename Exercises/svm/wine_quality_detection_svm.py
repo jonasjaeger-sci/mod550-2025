@@ -1,0 +1,89 @@
+"""
+Assignment: Build a support vector classifier for wine quality prediction
+"""
+
+import sys
+import pandas as pd
+from matplotlib import pyplot as plt
+from sklearn import svm
+from sklearn.preprocessing import StandardScaler
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import (accuracy_score, confusion_matrix, f1_score,
+                             recall_score, balanced_accuracy_score,
+                             precision_score)
+
+# define random seed
+r_seed = 77
+
+# data acquisition and preparation
+filename = ("/home/jonas/PycharmProjects/mod550-2025/"
+            "ML_project_data/wine_quality.csv")
+X = pd.read_csv(filename)
+
+col_headers = list(X)
+Y = X[col_headers[-2]]
+drop_col = [col_headers[i] for i in [0, 12, 13]]
+X = X.drop(drop_col, axis=1)
+
+# check how balanced data is
+class_names = list(set(Y))
+occurences = {}
+occ_weights = {}
+for str in (class_names):
+    occurences[str] = sum(Y == str)
+    occ_weights[str] = round(occurences[str]/len(Y),3)
+
+fig1 = plt.figure()
+ax1 = fig1.add_subplot(1,1,1)
+ax1.set_xlabel("Classes", fontsize=14, fontweight="bold")
+ax1.set_ylabel("Occurence ratio", fontsize=14, fontweight="bold")
+ax1.bar(occ_weights.keys(), occ_weights.values(), color="red", edgecolor="black", linewidth=1)
+ax1.grid(True)
+
+# split data, train model and predict outcome
+x_train, x_test, y_train, y_test = train_test_split(
+    X, Y, test_size=0.25, random_state=r_seed)
+
+# scale/normalize data
+scaler = StandardScaler()
+x_train_sc = scaler.fit_transform(x_train)
+x_test_sc = scaler.transform(x_test)
+X_sc = scaler.transform(X)
+#sys.exit()
+
+## Prepare a list of kernels and their parameters for iteration
+kernels = [('linear', svm.SVC(kernel='linear',  random_state=r_seed)),
+           ('poly (d=3)', svm.SVC(kernel='poly', degree=3, random_state=r_seed)),
+           ('rbf', svm.SVC(kernel='rbf', random_state=r_seed)),
+           ('sigmoid', svm.SVC(kernel='sigmoid', random_state=r_seed))]
+
+for kernel_name, svm_clf in kernels:
+    print(f"SVM: training, prediction and analysis with {kernel_name} kernel")
+    svm_clf.fit(x_train_sc,y_train)
+    y_test_predict = svm_clf.predict(x_test_sc)
+
+    # analyze predictive performance
+    acc = round(accuracy_score(y_test, y_test_predict),3)
+    balanced_acc = balanced_accuracy_score(y_test, y_test_predict)
+    sensitivity = recall_score(y_test, y_test_predict, average="micro")  # true positive rate
+    precision = precision_score(y_test, y_test_predict, average="micro")
+    f1 = f1_score(y_test, y_test_predict, average="micro")
+
+    print(f"Accuracy: {acc:.3f}")
+    print(f"balanced Accuracy: {balanced_acc:.3f}")
+    print(f"Sensitivity: {sensitivity:.3f}")
+    print(f"Precision: {precision:.3f}")
+    print(f"F1-Score: {f1:.3f} \n")
+
+    fig = plt.figure()
+    ax = fig.add_subplot(1,1,1)
+    ax.set_title(f"SVM predictions with {kernel_name} kernel \n"
+                 f"Accuracy = {acc}")
+    ax.set_xlabel("# of sample", fontsize=14, fontweight="bold")
+    ax.set_ylabel("Class", fontsize=14, fontweight="bold")
+    ax.scatter(range(1,len(y_test)+1), y_test, color="black", marker="s", s=30, label="test data")
+    ax.scatter(range(1,len(y_test)+1),y_test_predict, color="red", marker="o", s=30, label="prediction")
+    ax.legend()
+    ax.grid(True)
+
+plt.show()

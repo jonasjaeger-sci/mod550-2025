@@ -1,12 +1,14 @@
 
 
 import numpy as np
+import sys
 import matplotlib.pyplot as plt
 from sklearn import svm
 from sklearn.datasets import make_moons
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import accuracy_score
+
 from pltsvm import plot_svm_results
 
 
@@ -23,15 +25,15 @@ title_moons = "Non-linearly Separable Data (Moons)"
 X, y, title = X_moons, y_moons, title_moons
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
 scaler = StandardScaler()
+
 X_train_scaled = scaler.fit_transform(X_train)
 X_test_scaled = scaler.transform(X_test)
-X_all_scaled = scaler.transform(X) 
-
+X_all_scaled = scaler.transform(X)
 
 # 1.0 Raw Data Plot (Call the function)
 print(f"Plotting: {title} - Raw Data")
 plot_svm_results(X, y, title, plot_type='raw')
-
+# sys.exit()
 
 # Prepare a list of kernels and their parameters for iteration
 kernels = [

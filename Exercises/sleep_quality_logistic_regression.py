@@ -15,7 +15,7 @@ from sklearn.metrics import (accuracy_score, confusion_matrix, f1_score,
 r_seed = 77
 
 # acquire and prepare data
-file = "/home/jonas/Downloads/Sleep_health_and_lifestyle_dataset.csv"
+file = "/home/jonas/PycharmProjects/mod550-2025/ML_project_data/Sleep_health_and_lifestyle_dataset.csv"
 X = pd.read_csv(file)
 X[["BP_systolic", "BP_diastolic"]] = X["Blood Pressure"].str.split("/", expand=True)
 X[["BP_systolic", "BP_diastolic"]] = X[["BP_systolic", "BP_diastolic"]].astype(float)
@@ -26,8 +26,9 @@ Y = X[headers[5]]
 drop_headers = [headers[i] for i in [0,5,9]]
 # print(drop_headers)
 X = X.drop(drop_headers, axis=1)
-#print(list(X))
+print(list(X))
 X_encoded = pd.get_dummies(X)
+print(list(X_encoded))
 enc_headers = list(X_encoded)
 
 
