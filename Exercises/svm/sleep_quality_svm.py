@@ -93,3 +93,4 @@ for kernel_name, svm_clf in kernels:
     ax.grid(True)
 
 plt.show()
+
