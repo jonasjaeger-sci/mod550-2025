@@ -108,14 +108,14 @@ for i in idx:
     plt.plot(age_grid, post_b0[i] + post_b1[i]*age_grid + post_b2[i]*age_grid**2,
              alpha=0.06)
 
-"""
+#"""
 plt.plot(age_grid, polyreg_line, linewidth=2, color = 'red')  # OLS reference
 plt.xlabel('Age (years)')
 plt.ylabel('Time on App (minutes)')
 plt.title('Cloud of Bayesian Lines vs OLS')
 plt.tight_layout()
-plt.show()
-"""
+plt.grid(True)
+#"""
 
 # Posterior distributions and credible intervals
 def ci( a,alpha=0.05):
