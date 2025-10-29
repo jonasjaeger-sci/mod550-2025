@@ -1,0 +1,29 @@
+
+Readme.md: A bit poor.
+
+Task 1: Good!
+Task 2: Good!
+Task 3: Good!
+Task 4: Good!
+Task 5: Good!
+Task 6: Good!
+Task 7: Good!
+Task 8: Good!
+Task 9: Good!
+
+Task 10 a: The relu should not be so important other than numerical stability
+Task 10 b: ok 
+Task 10 c: good
+Task 10 d: good. For bic, as this was not disucssed in class, it would have been good to add some info/comment/reference.
+Task 10 e: production enegy vs wind speed is a relation, not a cluster.
+
+Comment:
+
+python : use pylint for detailed suggstions, overall it is good. Good docstring also.
+    
+Jupyter notebook: not there? Please prepare one to help me process the outcomes. Dataprocessing.py is ok, but a notebook would be easier for results visualization and discussion.
+
+
+Note: very good job, my remarks are minor points. To prepare for the exam, use your library with more complicated truth functions to generate data. Also you might want to generate data from multimodal distributions.
+I look forward to see your outcome on the final project, but TRAIN yourself a bit more on these TEST data before to take advantage of the VALIDATION of your tools/understanding. 
+
